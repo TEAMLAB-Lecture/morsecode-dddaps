@@ -143,11 +143,8 @@ def is_validated_morse_code(user_input):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     result = True
-    for w in user_input: # 1)
-        if w not in "-. ":
-            result = False
 
-    
+    # split해서 공백을 제거한 후에는 2)조건 만족
     input_list = user_input.split()
     for w in input_list: # 2) 코드를 구분하기 위해 split()
         if w not in get_morse_code_dict().values():
@@ -304,9 +301,10 @@ def encoding_sentence(english_sentence):
     # ===Modify codes below=============
     # 조건에 따라 변환되어야 할 결과를 result 변수에 할당 또는 필요에 따라 자유로운 수정
     result = ""
-    english_word_list = get_cleaned_english_sentence(english_sentence)
+    english_word_str = ' '.join(get_cleaned_english_sentence(english_sentence).split())
+    # 띄어쓰기 단위를 공백 하나로 일정하게 유지하기 위함
 
-    for w in english_word_list:
+    for w in english_word_str:
         if w != ' ':
             result += encoding_character(w.upper())
         result += ' '
@@ -320,10 +318,12 @@ def encoding_sentence(english_sentence):
 def main():
     print("Morse Code Program!!")
     # ===Modify codes below=============
-    user_input = "1"
-
-    while(user_input != '0'):
+    while True:
+        
         user_input = input("Input youer message(H - Help, 0 - Exit): ")
+
+        if user_input == '0':
+            break
 
         if is_help_command(user_input):
             get_help_message()        
@@ -337,7 +337,7 @@ def main():
     # ==================================
     print("Good Bye")
     print("Morse Code Program Finished!!")
-    
+
 
 if __name__ == "__main__":
     main()
